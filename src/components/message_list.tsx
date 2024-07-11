@@ -22,7 +22,8 @@ export function MessageList({items}: MessageListProps) {
                         className={cn(
                             "flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent",
                             message.selected === item.id && "bg-muted"
-                        )}>
+                        )}
+                    onClick={() => {setMessages({...message, selected: item.id})}}>
                         <div className="flex w-full flex-col gap-1">
                             <div className="flex items-center">
                                 <div className="flex items-center gap-2">
