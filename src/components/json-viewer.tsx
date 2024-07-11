@@ -1,60 +1,78 @@
 import React from "react";
+import {data} from "autoprefixer";
+import {Collapsible, CollapsibleContent, CollapsibleTrigger} from "./ui/collapsible";
 
 interface JsonViewerProps {
     data: object
 }
 
-function StringProperty({stringPropertyKey, value}: StringPropertyProps) {
-    return <div><span className="font-bold">{stringPropertyKey}</span>: "{value}"</div>;
+function StringProperty({propertyKey, value}: StringPropertyProps) {
+    return <div><span className="font-bold">{propertyKey}</span>: "{value}"</div>;
 }
 
 type StringPropertyProps = {
-    stringPropertyKey: string
+    propertyKey: string
     value: string
 }
 
-function NumberProperty({numberPropertyKey, value}: NumberPropertyProps) {
-    return <div><span className="font-bold">{numberPropertyKey}</span>: {value}</div>;
+function NumberProperty({propertyKey, value}: NumberPropertyProps) {
+    return <div><span className="font-bold">{propertyKey}</span>: {value}</div>;
 }
 
 type NumberPropertyProps = {
-    numberPropertyKey: string
+    propertyKey: string
     value: number
 }
 
-function BoolProperty({boolPropertyKey, value}: BoolPropertyProps) {
-    return <div><span className="font-bold">{boolPropertyKey}</span>: {value ? 'true' : 'false'}</div>;
+function BoolProperty({propertyKey, value}: BoolPropertyProps) {
+    return <div><span className="font-bold">{propertyKey}</span>: {value ? 'true' : 'false'}</div>;
 }
 
 type BoolPropertyProps = {
-    boolPropertyKey: string
+    propertyKey: string
     value: boolean
 }
 
-function UndefinedProperty({undefinedPropertyKey}: UndefinedPropertyProps) {
-    return <div><span className="font-bold">{undefinedPropertyKey}</span>: <span className="text-muted italic">undefined</span></div>;
+function UndefinedProperty({propertyKey}: UndefinedPropertyProps) {
+    return <div><span className="font-bold">{propertyKey}</span>: <span className="text-muted italic">undefined</span>
+    </div>;
 }
 
 type UndefinedPropertyProps = {
-    undefinedPropertyKey: string
+    propertyKey: string
 }
 
 function PropertyItem({propertyKey, value}: NodeItemProps) {
 
     if (typeof value === "object") {
         if (value.constructor === Object) {
-            return <div></div>;
+            return (
+                <Collapsible
+                    className="w-[350px] space-y-2"
+                >
+                    <CollapsibleTrigger asChild>
+                        <div><span className="font-bold">{propertyKey}</span>: </div>
+                    </CollapsibleTrigger>
+                    <CollapsibleContent>
+                        <div className="pl-4">
+                            {Object.keys(value).map((key, i) => {
+                                return <PropertyItem key={i} propertyKey={key} value={value[key]}/>;
+                            })}
+                        </div>
+                    </CollapsibleContent>
+                </Collapsible>
+            );
         } else if (value.constructor === Array) {
             return <div></div>;
         }
     } else if (typeof value === "string") {
-        return <StringProperty stringPropertyKey={propertyKey} value={value as unknown as string}/>;
+        return <StringProperty propertyKey={propertyKey} value={value as unknown as string}/>;
     } else if (typeof value === "number") {
-        return <NumberProperty numberPropertyKey={propertyKey} value={value as unknown as number}/>;
+        return <NumberProperty propertyKey={propertyKey} value={value as unknown as number}/>;
     } else if (typeof value === "boolean") {
-        return <BoolProperty boolPropertyKey={propertyKey} value={value as unknown as boolean}/>;
+        return <BoolProperty propertyKey={propertyKey} value={value as unknown as boolean}/>;
     } else if (typeof value === "undefined") {
-        return <UndefinedProperty undefinedPropertyKey={propertyKey}/>;
+        return <UndefinedProperty propertyKey={propertyKey}/>;
     } else {
         return <div></div>
     }
