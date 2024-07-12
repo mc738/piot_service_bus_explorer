@@ -1,3 +1,5 @@
+// noinspection ES6PreferShortImport
+
 import {MessageItem, messages} from "../data/messages";
 import React from "react";
 import {Tooltip, TooltipContent, TooltipTrigger} from "./ui/tooltip";
