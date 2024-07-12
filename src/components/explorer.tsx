@@ -1,3 +1,5 @@
+// noinspection ES6PreferShortImport
+
 import React from "react";
 import {TooltipProvider} from "./ui/tooltip";
 import {ResizableHandle, ResizablePanel, ResizablePanelGroup} from "./ui/resizable";
