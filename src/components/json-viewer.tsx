@@ -1,5 +1,4 @@
 import React from "react";
-import {data} from "autoprefixer";
 import {Collapsible, CollapsibleContent, CollapsibleTrigger} from "./ui/collapsible";
 
 interface JsonViewerProps {
