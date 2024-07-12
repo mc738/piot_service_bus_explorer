@@ -37,24 +37,25 @@ const data = {
     description: "description",
     date: Date(),
     data: {
-      id: "id",
-      name: "data name",
-      user: "user_1"
+        id: "id",
+        name: "data name",
+        user: "user_1"
     },
     items: [
         {
             id: "item_1",
             name: "Item 1",
             description: "This is item 1",
+            labels: ["label1", "label2"]
         },
         {
             id: "item_2",
             name: "Item 2",
             description: "This is item 2",
+            subItems: [{name: "sub item 1"}, {name: "sub item 2"}]
         }
     ]
 }
-
 
 
 export function MessageDisplay({message}: MessageDisplayProps) {
@@ -96,7 +97,7 @@ export function MessageDisplay({message}: MessageDisplayProps) {
                             <h1>{message.name}</h1>
 
                             <div className="flex-1 whitespace-pre-wrap p-4 text-sm">
-                                <JsonViewer data={data} />
+                                <JsonViewer data={data}/>
 
 
                                 <JSONTree
@@ -109,7 +110,7 @@ export function MessageDisplay({message}: MessageDisplayProps) {
                                         },
                                         // switch key for objects to uppercase when object is expanded.
                                         // `nestedNodeLabel` receives additional argument `expandable`
-                                        nestedNodeLabel: ({ style }, keyPath, nodeType, expanded) => ({
+                                        nestedNodeLabel: ({style}, keyPath, nodeType, expanded) => ({
                                             style: {
                                                 ...style,
                                                 textTransform: expanded ? 'uppercase' : style.textTransform,
