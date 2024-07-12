@@ -51,7 +51,8 @@ function PropertyItem({propertyKey, value}: NodeItemProps) {
                     className="w-[350px] space-y-2"
                 >
                     <CollapsibleTrigger asChild>
-                        <div><span className="font-bold">{propertyKey}</span>: </div>
+                        <div><span className="font-bold">{propertyKey}</span>: <span
+                            className="text-muted-foreground">&#123;&#125;</span></div>
                     </CollapsibleTrigger>
                     <CollapsibleContent>
                         <div className="pl-4">
@@ -63,7 +64,25 @@ function PropertyItem({propertyKey, value}: NodeItemProps) {
                 </Collapsible>
             );
         } else if (value.constructor === Array) {
-            return <div></div>;
+            return (
+                <Collapsible
+                    className="w-[350px] space-y-2"
+                >
+                    <CollapsibleTrigger asChild>
+                        <div><span className="font-bold">{propertyKey}</span>: <span
+                            className="text-muted-foreground">&#91;&#93;</span></div>
+                    </CollapsibleTrigger>
+                    <CollapsibleContent>
+                        <div className="pl-4">
+                            {(value).map((item, i) => {
+                            return (
+                                <PropertyItem key={i} propertyKey={i.toString()} value={item}/>
+                            )
+                            })}
+                        </div>
+                    </CollapsibleContent>
+                </Collapsible>
+            );
         }
     } else if (typeof value === "string") {
         return <StringProperty propertyKey={propertyKey} value={value as unknown as string}/>;
@@ -82,6 +101,8 @@ type NodeItemProps = {
     propertyKey: string
     value: any
 }
+
+
 
 export function JsonViewer({data}: JsonViewerProps) {
 
